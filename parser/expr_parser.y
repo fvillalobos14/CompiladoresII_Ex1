@@ -29,20 +29,23 @@
 
 %%
 
-input: input expr ";" { map.push_back($2); }
-    | %empty { }
+input:  expr opt_sc { map.push_back($1); }
     ;
 
-expr:   expr "+" term { $$ = $1 + $3; }
-    |   expr "-" term { $$ = $1 - $3; }
+opt_sc: ';'
+    |   %empty
+    ;
+
+expr:   expr '+' term { $$ = $1 + $3; }
+    |   expr '-' term { $$ = $1 - $3; }
     |   term    { $$ = $1; }   
     ;
 
-term:   term "*" factor { $$ = $1 * $3; }
-    |   term "/" factor { $$ = $1 / $3; }
+term:   term '*' factor { $$ = $1 * $3; }
+    |   term '/' factor { $$ = $1 / $3; }
     |   factor { $$ = $1; }
     ;
 
 factor: NUMBER { $$ = $1; }
-    |   "(" expr ")" { $$ = $2; }
+    |   '(' expr ')' { $$ = $2; }
     ;

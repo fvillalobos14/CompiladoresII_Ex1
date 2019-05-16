@@ -23,7 +23,7 @@ class ExprParser {
         }
 
         double getExprValue(int index){
-            return map.at(index);
+            return map[index];
         }
 
         void yyerror(const char * msg);
